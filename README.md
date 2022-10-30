@@ -13,3 +13,8 @@ but probably also works on older versions.
 
 Here is a loom video showing how it works: https://www.loom.com/share/0754aa8871c245bfbef44e718fe55e3e
 
+The main constraints are:
+- The solution must run ON the users device (the audio cannot be sent to a server for conversion).
+- It cannot involve the user installing any additional software manually.
+- Any packages used for conversion must be very small <100kb. If they are larger than that, they must be loaded after the app starts up to not cause a delay (although even in that case they should not be more than 5-10MB)
+
