@@ -8,6 +8,9 @@ import 'package:js/js.dart';
 @JS()
 external getAudio(blob);
 
+@JS()
+external conversionVAD(url);
+
 // TODO:make the function accept file name as a parameter and save the file with that name
 convertWave(blob) async {
   var promise = getAudio(blob);
@@ -15,7 +18,12 @@ convertWave(blob) async {
   var nblob = Blob([qs], 'audio/wav');
   var url = Url.createObjectUrlFromBlob(nblob);
 
-  AnchorElement anchorElement = AnchorElement(href: url);
+  var vad = conversionVAD(url);
+  var vadPromise = await promiseToFuture(vad);
+  var vadBlob = Blob([vadPromise], 'audio/wav');
+  var vadUrl = Url.createObjectUrlFromBlob(vadBlob);
+
+  AnchorElement anchorElement = AnchorElement(href: vadUrl);
   anchorElement.download = 'audio.wav';
   anchorElement.click();
 }

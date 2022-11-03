@@ -95,8 +95,21 @@ function writeString(view, offset, string) {
   }
 }
 
+function arrayBufferToBase64(buffer) {
+  var binary = "";
+  var bytes = new Uint8Array(buffer);
+  var len = bytes.byteLength;
+
+  for (var i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
 function getAudio(blob) {
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)({
+    sampleRate: 16000,
+  });
 
   return new Promise(function (resolve, reject) {
     var reader = new FileReader();
@@ -118,5 +131,20 @@ function getAudio(blob) {
       reject(e);
     };
     reader.readAsArrayBuffer(blob);
+  });
+}
+
+function arrayToWav(arr) {
+  return new Promise(function (resolve, reject) {
+    try {
+      const wavBuffer = encodeWAV(arr);
+      const base64 = arrayBufferToBase64(wavBuffer);
+
+      console.log("base64", `data:audio/wav;base64,${base64}`);
+
+      resolve(wavBuffer);
+    } catch (e) {
+      reject(e);
+    }
   });
 }
