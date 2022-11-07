@@ -15,9 +15,7 @@ function conversionVAD(url) {
         },
         onSpeechEnd: async (arr) => {
           console.log("speech end");
-          const blob = await arrayToWav(arr);
-          console.log(blob);
-          resolve(blob);
+          resolve(arr);
         },
       });
 

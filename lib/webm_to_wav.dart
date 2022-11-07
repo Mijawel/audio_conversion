@@ -18,12 +18,12 @@ convertWave(blob) async {
   var nblob = Blob([qs], 'audio/wav');
   var url = Url.createObjectUrlFromBlob(nblob);
 
-  var vad = conversionVAD(url);
-  var vadPromise = await promiseToFuture(vad);
-  var vadBlob = Blob([vadPromise], 'audio/wav');
-  var vadUrl = Url.createObjectUrlFromBlob(vadBlob);
-
-  AnchorElement anchorElement = AnchorElement(href: vadUrl);
+  AnchorElement anchorElement = AnchorElement(href: url);
   anchorElement.download = 'audio.wav';
   anchorElement.click();
+
+  var vad = conversionVAD(url);
+  var vadPromise = await promiseToFuture(vad);
+
+  print(vadPromise);
 }
