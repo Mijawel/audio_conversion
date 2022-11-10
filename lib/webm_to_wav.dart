@@ -23,7 +23,7 @@ convertWave(blob) async {
   anchorElement.click();
 
   var vad = conversionVAD(url);
-  var vadPromise = await promiseToFuture(vad);
+  var vadPromise = await promiseToFuture(vad) as String;
 
   print(jsonDecode(vadPromise));
   return vadPromise;
