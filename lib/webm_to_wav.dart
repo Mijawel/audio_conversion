@@ -3,6 +3,7 @@ library webm_to_wav;
 
 import 'dart:html';
 import 'dart:js_util';
+import 'dart:convert';
 import 'package:js/js.dart';
 
 @JS()
@@ -11,7 +12,6 @@ external getAudio(blob);
 @JS()
 external conversionVAD(url);
 
-// TODO:make the function accept file name as a parameter and save the file with that name
 convertWave(blob) async {
   var promise = getAudio(blob);
   var qs = await promiseToFuture(promise);
@@ -25,5 +25,6 @@ convertWave(blob) async {
   var vad = conversionVAD(url);
   var vadPromise = await promiseToFuture(vad);
 
-  print(vadPromise);
+  print(jsonDecode(vadPromise));
+  return vadPromise;
 }

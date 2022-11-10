@@ -14,13 +14,14 @@ function conversionVAD(url) {
       const myvad = await vad.AudioNodeVAD.new(ctx, {
         onSpeechStart: () => {
           const ts = ctx.getOutputTimestamp();
-          console.log("Speech start", ts.contextTime, ts.performanceTime);
-          timestamps[count] = { start: ts.contextTime, end: null };
+          timestamps[count] = { start: audio.currentTime * 1000, end: null };
         },
         onSpeechEnd: async (arr) => {
           const ts = ctx.getOutputTimestamp();
-          console.log("Speech end", ts.contextTime, ts.performanceTime);
-          timestamps[count] = { ...timestamps[count], end: ts.contextTime };
+          timestamps[count] = {
+            ...timestamps[count],
+            end: audio.currentTime * 1000,
+          };
           count++;
         },
       });
@@ -33,8 +34,7 @@ function conversionVAD(url) {
 
       audio.addEventListener("ended", async () => {
         console.log("Transcoding audio... done");
-        console.log("Timestamps", timestamps);
-        resolve(timestamps);
+        resolve(JSON.stringify(timestamps));
       });
     } catch (error) {
       reject(error);
