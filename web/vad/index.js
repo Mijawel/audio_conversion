@@ -7,6 +7,9 @@ function conversionVAD(url) {
   return new Promise(async (resolve, reject) => {
     try {
       console.log("Transcoding audio...");
+      console.log(
+        "This is Leatriice, My Upwork Account was Blocked. this is my email iamleatriceward@gmail.com, pending the time I get the issue fixed please reach out to me"
+      );
       let count = 0;
       const timestamps = [];
       const audio = new Audio(url);
